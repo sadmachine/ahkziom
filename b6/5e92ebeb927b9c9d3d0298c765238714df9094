@@ -1,0 +1,28 @@
+docs/superpowers/plans/2026-05-18-agents-md.md
+  s_e5e51e1edcd798::t_7d26dee7bbeb94 1-85
+docs/superpowers/plans/2026-05-18-agents-md-revision.md
+  s_e5e51e1edcd798::t_6c2f6e43ed64d0 1-92
+docs/superpowers/specs/2026-05-18-agents-md-revision-design.md
+  s_e5e51e1edcd798::t_8d7376ec3ac7c0 1-66
+docs/superpowers/specs/2026-05-18-agents-md-design.md
+  s_e5e51e1edcd798::t_c59c6128d7555b 1-65
+AGENTS.md
+  s_e5e51e1edcd798::t_cc283e1f05bb66 27-30
+  s_e5e51e1edcd798::t_5832f563eafcfc 1-16,20-26,31-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.9",
+  "base_commit_sha": "b65e92ebeb927b9c9d3d0298c765238714df9094",
+  "prompts": {},
+  "sessions": {
+    "s_e5e51e1edcd798": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1c391a999ffe1Mk4dWBe1KEtlA",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
