@@ -1,0 +1,77 @@
+README.md
+  s_41bec98901e1ee::t_a04668744be997 18-19
+tests/unit/CliRendererTests.ahk
+  s_41bec98901e1ee::t_2f1f1b54c380f5 4-13,15,17
+src/Ahkxiom.ahk
+  s_41bec98901e1ee::t_29ff3763273e50 14
+  s_41bec98901e1ee::t_40bb902bfa588b 19
+  s_41bec98901e1ee::t_4dd9e0869df1df 7-13
+tests/unit/OutputObjectTests.ahk
+  s_41bec98901e1ee::t_cc3718b6679dc6 1-21
+src/output/HookOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-11
+src/renderers/CliRenderer.ahk
+  s_41bec98901e1ee::t_40bb902bfa588b 3,5,7,9-10,12-13,15-16,18-24,30
+tests/functional/MvpFlowTests.ahk
+  s_41bec98901e1ee::t_c7a50fb8fb1a6c 20-22,24-28,32
+tests/unit/OutputSerializerTests.ahk
+  s_41bec98901e1ee::t_33a3275e07d1ee 1-17
+src/output/OutputSerializer.ahk
+  s_41bec98901e1ee::t_29ff3763273e50 1-93
+src/output/TestRunOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-18
+src/output/DescribeOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-15
+docs/api-reference.md
+  s_41bec98901e1ee::t_a04668744be997 50,58,168,170,174,184-223
+src/renderers/IRenderer.ahk
+  s_41bec98901e1ee::t_40bb902bfa588b 1-8
+src/output/CountOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-10
+src/output/SuiteOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-22
+tests/unit/SuiteRunnerTests.ahk
+  s_41bec98901e1ee::t_9615427642f086 4-5,19,58-65,70
+src/output/AssertionOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-15
+src/assertions/Expectation.ahk
+  s_41bec98901e1ee::t_73ffc2fd537235 35-45
+tests/unit/DescribeAndExpectationTests.ahk
+  s_41bec98901e1ee::t_ae7bdf9cd512d4 4-5,20-21,32-34
+src/core/SuiteRunner.ahk
+  s_41bec98901e1ee::t_4b370b41d415cb 36-39,41,44,55-56,59-61,64,67,69
+src/output/MethodOutput.ahk
+  s_41bec98901e1ee::t_4dd9e0869df1df 1-16
+src/assertions/DescribeScope.ahk
+  s_41bec98901e1ee::t_73ffc2fd537235 11,15
+tests/unit/RendererInterfaceTests.ahk
+  s_41bec98901e1ee::t_6eebc6507ba0c4 1-12
+tests/helpers/PlanTestRunner.ahk
+  s_41bec98901e1ee::t_bca9f607c87c70 9-11
+src/core/Results.ahk
+  s_41bec98901e1ee::t_73ffc2fd537235 5-20,22,26,30-44,46-47,50-51,53-59,61,67
+docs/contributor-guide.md
+  s_41bec98901e1ee::t_a04668744be997 7-33,37,42,69-71,73,75-77,79-81,85,92,94,96,98,105
+docs/getting-started.md
+  s_41bec98901e1ee::t_a04668744be997 80-81
+docs/result-format.md
+  s_41bec98901e1ee::t_a04668744be997 3,5,7-16,19-22,24,31,34,38,41-42,44,55,61,64-65,68-69,72-76,78
+src/core/ExecutionContext.ahk
+  s_41bec98901e1ee::t_73ffc2fd537235 5,7,16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.10",
+  "base_commit_sha": "2226695bc3952f1962ff4840f58b7bd3588edf4c",
+  "prompts": {},
+  "sessions": {
+    "s_41bec98901e1ee": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1c359489dffehu6dW6nS7VTGiw",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
