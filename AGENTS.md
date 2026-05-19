@@ -42,3 +42,10 @@ This repository is a library. Favor reusable APIs, clear module boundaries, and 
 - Preserve AHKv2 consistency across the codebase.
 - Follow the documented style rules when adding or editing code.
 - Avoid introducing patterns that make the library harder to understand, use, or maintain.
+
+## Commits
+
+- Make commits as atomic as practical.
+- Avoid mixing unrelated changes in the same commit.
+- Write short but specific commit messages that describe the change clearly.
+- If additional context is needed, put it in the commit description or body.
