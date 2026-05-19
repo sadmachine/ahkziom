@@ -1,0 +1,27 @@
+docs/getting-started.md
+  s_41bec98901e1ee::t_c83c71cdda7f7c 1-90
+README.md
+  s_41bec98901e1ee::t_61ce2d8db28b12 5,21-27
+docs/result-format.md
+  s_41bec98901e1ee::t_c3240649310016 1-91
+docs/api-reference.md
+  s_41bec98901e1ee::t_abdddde12da1d5 1-191
+docs/contributor-guide.md
+  s_41bec98901e1ee::t_65079789e1a7cf 1-100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.9",
+  "base_commit_sha": "08d3a5988fb49d2378d98f0df1f7ff95c55c5ef2",
+  "prompts": {},
+  "sessions": {
+    "s_41bec98901e1ee": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1c359489dffehu6dW6nS7VTGiw",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
