@@ -1,0 +1,9 @@
+{
+  "name": "vendor/project",
+  "installBase": "Lib",
+  "defaultRequirementSource": "git",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {},
+  "sources": []
+}
