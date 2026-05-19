@@ -15,8 +15,8 @@ class MySuite extends TestSuiteBase
     }
 }
 
-result := SuiteRunner.runSuiteInstance(MySuite())
-MsgBox CliRenderer.render(result)
+run_output := SuiteRunner.runSuiteInstance(MySuite())
+MsgBox CliRenderer().render(run_output)
 ```
 
 ## Documentation

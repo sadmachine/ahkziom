@@ -17,14 +17,19 @@ class MvpSuite extends TestSuiteBase
     }
 }
 
-result := SuiteRunner.runSuiteInstance(MvpSuite())
-output := CliRenderer.render(result)
+run_output := SuiteRunner.runSuiteInstance(MvpSuite())
+portable := OutputSerializer.toPortable(run_output)
+output := CliRenderer().render(run_output)
 
-if (result.methods.Length != 1) {
+if (portable.schemaVersion = "") {
+    throw Error("Expected portable output to include schemaVersion")
+}
+
+if (run_output.suites[1].methods.Length != 1) {
     throw Error("Expected one discovered test method")
 }
 
-if (result.methods[1].describes[1].assertions.Length != 3) {
+if (run_output.suites[1].methods[1].describes[1].assertions.Length != 3) {
     throw Error("Expected three assertions in the functional suite")
 }
 

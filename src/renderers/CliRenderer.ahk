@@ -1,29 +1,33 @@
 #Requires AutoHotkey v2.0
 
-class CliRenderer
+class CliRenderer extends IRenderer
 {
-    static render(suite_result) {
+    render(test_run_output) {
         lines := []
-        lines.Push("Suite: " suite_result.name)
+        lines.Push("Run: " test_run_output.runId " (schema " test_run_output.schemaVersion ")")
 
-        for method_result in suite_result.methods {
-            lines.Push("  Method: " method_result.name)
+        for suite_output in test_run_output.suites {
+            lines.Push("Suite: " suite_output.name)
 
-            for describe_result in method_result.describes {
-                lines.Push("    Describe: " describe_result.description)
+            for method_output in suite_output.methods {
+                lines.Push("  Method: " method_output.name)
 
-                for assertion_result in describe_result.assertions {
-                    status := assertion_result.passed ? "passed" : "failed"
-                    lines.Push("      [" status "] " assertion_result.description " (" assertion_result.matcher ")")
+                for describe_output in method_output.describes {
+                    lines.Push("    Describe: " describe_output.description)
 
-                    if (assertion_result.message != "") {
-                        lines.Push("        " assertion_result.message)
+                    for assertion_output in describe_output.assertions {
+                        status := assertion_output.passed ? "passed" : "failed"
+                        lines.Push("      [" status "] " assertion_output.description " (" assertion_output.matcher ")")
+
+                        if (assertion_output.message != "") {
+                            lines.Push("        " assertion_output.message)
+                        }
                     }
                 }
             }
         }
 
-        lines.Push("Summary: " suite_result.counts.passed " passed, " suite_result.counts.failed " failed, " suite_result.counts.errored " errored")
+        lines.Push("Summary: " test_run_output.counts.passed " passed, " test_run_output.counts.failed " failed, " test_run_output.counts.errored " errored")
         return CliRenderer.joinLines(lines)
     }
 

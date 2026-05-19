@@ -77,8 +77,8 @@ sampleTest() {
 ## Run A Suite And Render Output
 
 ```ahk
-result := SuiteRunner.runSuiteInstance(MathSuite())
-output := CliRenderer.render(result)
+run_output := SuiteRunner.runSuiteInstance(MathSuite())
+output := CliRenderer().render(run_output)
 MsgBox output
 ```
 

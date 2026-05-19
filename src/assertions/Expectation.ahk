@@ -32,16 +32,17 @@ class Expectation
             fail_fast := describe_scope.executionContext.resolveFailFast()
         }
 
-        describe_scope.result.assertions.Push({
-            description: this.assertionCase.description,
-            matcher: matcher_name,
-            actual: this.hasActualValue ? this.actual : "",
-            expected: expected,
-            passed: passed,
-            message: message,
-            failFastSource: fail_fast,
-            error: error_text
-        })
+        assertion_output := AssertionOutput(
+            this.assertionCase.description,
+            matcher_name,
+            this.hasActualValue ? this.actual : "",
+            expected,
+            passed,
+            message,
+            fail_fast,
+            error_text
+        )
+        describe_scope.result.addAssertion(assertion_output)
 
         if (!passed && fail_fast) {
             describe_scope.executionContext.stopDescribe(describe_scope.id)

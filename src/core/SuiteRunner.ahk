@@ -33,13 +33,15 @@ class SuiteRunner
     }
 
     static runSuiteInstance(suite_instance) {
-        suite_result := Results.newSuiteResult(suite_instance.base.__Class)
-        context := ExecutionContext(suite_instance, suite_result, suite_instance.failFast)
+        test_run_output := Results.newTestRunOutput(suite_instance.base.__Class)
+        suite_output := Results.newSuiteOutput(suite_instance.base.__Class)
+        test_run_output.addSuite(suite_output)
+        context := ExecutionContext(suite_instance, suite_output, suite_instance.failFast)
 
-        SuiteRunner.runHook(suite_instance, suite_result, "beforeAll")
+        SuiteRunner.runHook(suite_instance, suite_output, "beforeAll")
 
         for method_name in SuiteRunner.discoverTestMethods(suite_instance) {
-            SuiteRunner.runHook(suite_instance, suite_result, "beforeEach", method_name)
+            SuiteRunner.runHook(suite_instance, suite_output, "beforeEach", method_name)
 
             method_result := context.beginMethod(method_name)
             suite_instance.__currentExecutionContext := context
@@ -50,21 +52,21 @@ class SuiteRunner
                 method_result.error := err.Message
             }
 
-            suite_result.methods.Push(method_result)
-            SuiteRunner.runHook(suite_instance, suite_result, "afterEach", method_name)
+            suite_output.addMethod(method_result)
+            SuiteRunner.runHook(suite_instance, suite_output, "afterEach", method_name)
         }
 
-        SuiteRunner.runHook(suite_instance, suite_result, "afterAll")
-        Results.finalizeCounts(suite_result)
-        return suite_result
+        SuiteRunner.runHook(suite_instance, suite_output, "afterAll")
+        Results.finalizeCounts(test_run_output)
+        return test_run_output
     }
 
-    static runHook(suite_instance, suite_result, hook_name, method_name := "") {
+    static runHook(suite_instance, suite_output, hook_name, method_name := "") {
         try {
             suite_instance.%hook_name%()
-            suite_result.hooks.Push({ name: hook_name, method: method_name, passed: true, error: "" })
+            suite_output.addHook(HookOutput(hook_name, method_name, true, ""))
         } catch as err {
-            suite_result.hooks.Push({ name: hook_name, method: method_name, passed: false, error: err.Message })
+            suite_output.addHook(HookOutput(hook_name, method_name, false, err.Message))
         }
     }
 }

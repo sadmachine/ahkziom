@@ -2,9 +2,9 @@
 
 class ExecutionContext
 {
-    __New(suite_instance, suite_result, suite_fail_fast := false) {
+    __New(suite_instance, suite_output, suite_fail_fast := false) {
         this.suite := suite_instance
-        this.suiteResult := suite_result
+        this.suiteOutput := suite_output
         this.suiteFailFast := suite_fail_fast
         this.currentMethod := ""
         this.currentMethodResult := ""
@@ -13,7 +13,7 @@ class ExecutionContext
 
     beginMethod(method_name) {
         this.currentMethod := method_name
-        this.currentMethodResult := Results.newMethodResult(method_name)
+        this.currentMethodResult := Results.newMethodOutput(method_name)
         this.stoppedDescribeIds := Map()
         return this.currentMethodResult
     }

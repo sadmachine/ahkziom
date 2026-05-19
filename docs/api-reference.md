@@ -47,7 +47,7 @@ Discovery behavior:
 
 ### `SuiteRunner.runSuiteInstance(suite_instance)`
 
-Executes a suite instance and returns a normalized suite result object.
+Executes a suite instance and returns a `TestRunOutput` object.
 
 Parameters:
 
@@ -55,7 +55,7 @@ Parameters:
 
 Returns:
 
-- normalized suite result object
+- `TestRunOutput`
 
 ## `DescribeScope`
 
@@ -165,13 +165,13 @@ Caveat:
 
 ## `CliRenderer`
 
-### `CliRenderer.render(suite_result)`
+### `CliRenderer().render(test_run_output)`
 
-Consumes a normalized suite result and returns CLI-friendly text output.
+Consumes a `TestRunOutput` object and returns CLI-friendly text output.
 
 Parameters:
 
-- `suite_result`: the normalized output from `SuiteRunner.runSuiteInstance(...)`
+- `test_run_output`: the output from `SuiteRunner.runSuiteInstance(...)`
 
 Returns:
 
@@ -180,6 +180,46 @@ Returns:
 ### `CliRenderer.joinLines(lines)`
 
 Internal helper that joins lines with newlines. Most users should call `render(...)` instead.
+
+## Output Objects
+
+### `TestRunOutput(schema_version, run_id, created_at)`
+
+Top-level output object for one completed run.
+
+### `SuiteOutput(name)`
+
+Suite-level output object.
+
+### `HookOutput(name, method_name := "", passed := true, error_text := "")`
+
+Lifecycle hook output record.
+
+### `MethodOutput(name)`
+
+Discovered test method output object.
+
+### `DescribeOutput(description, fail_fast := false)`
+
+Describe group output object.
+
+### `AssertionOutput(description, matcher_name, actual_value, expected_value, passed, message := "", fail_fast_source := false, error_text := "")`
+
+Matcher assertion output object.
+
+### `CountOutput()`
+
+Aggregate count object with `passed`, `failed`, and `errored` fields.
+
+### `OutputSerializer.toPortable(test_run_output)`
+
+Converts `TestRunOutput` into a plain-data representation suitable for JSON-style serialization or deferred rendering.
+
+## Renderer Interface
+
+### `IRenderer.render(test_run_output)`
+
+Defines the instance renderer contract. Renderer implementations consume `TestRunOutput` and return renderer-specific output without executing tests.
 
 ## Matcher Example
 

@@ -4,29 +4,42 @@
 
 `SuiteRunner.runSuiteInstance(...)` is the execution entrypoint.
 
-The current MVP flow is:
+The current flow is:
 
-1. instantiate a suite
-2. run `beforeAll()`
-3. discover test methods
-4. run `beforeEach()` for each discovered method
-5. create method execution context state
-6. execute the test method
-7. record assertion results into the active describe scope
-8. run `afterEach()`
-9. run `afterAll()`
-10. finalize aggregate counts
+1. create a top-level `TestRunOutput`
+2. create one `SuiteOutput`
+3. run `beforeAll()`
+4. discover test methods
+5. run `beforeEach()` for each discovered method
+6. create `MethodOutput` execution context state
+7. execute the test method
+8. record `DescribeOutput` and `AssertionOutput` objects
+9. run `afterEach()`
+10. run `afterAll()`
+11. finalize `CountOutput` aggregates
+
+## Output Object Interface
+
+The formal output interface is a canonical object family rooted at `TestRunOutput`.
+
+- `TestRunOutput` represents one completed run.
+- `SuiteOutput` represents one executed suite.
+- `HookOutput` represents lifecycle hook outcomes.
+- `MethodOutput` represents one discovered test method.
+- `DescribeOutput` represents one describe group.
+- `AssertionOutput` represents one matcher result.
+- `CountOutput` stores aggregate pass/fail/error counts.
+
+Use `OutputSerializer.toPortable(...)` to project the canonical objects into plain data for JSON-style export or deferred rendering.
 
 ## Result Recording
 
-Result recording is split across several focused objects:
+Result recording is split across focused objects:
 
 - `TestSuiteBase.describe(...)` creates a `DescribeScope`
 - `DescribeScope.it(...)` creates an `AssertionCase`
 - `AssertionCase.expect(...)` and `AssertionCase.expectVar(...)` create an `Expectation`
-- matcher methods append normalized assertion records to the active describe result
-
-This separation keeps suite authoring, execution state, and matcher behavior loosely coupled.
+- matcher methods append `AssertionOutput` records to the active `DescribeOutput`
 
 ## Fail-Fast Resolution
 
@@ -53,48 +66,40 @@ When adding a matcher:
 - make the matcher return through `Expectation.recordResult(...)`
 - document the matcher in `docs/api-reference.md`
 
-## Renderer Contract
+## Renderer Interface
 
-Renderers consume normalized output data and do not execute tests.
+`IRenderer` defines the instance renderer contract.
 
-Current renderer responsibilities:
+Renderer implementations should expose:
 
-- accept normalized suite output from `SuiteRunner.runSuiteInstance(...)`
+```ahk
+render(test_run_output)
+```
+
+Renderer responsibilities:
+
+- accept `TestRunOutput`
 - transform output data into presentation text or UI
 - preserve distinctions between passes, failures, and framework/runtime errors
 
-Current renderer non-responsibilities:
+Renderer non-responsibilities:
 
 - suite discovery
 - hook execution
 - matcher execution
 - test control flow
 
-The MVP currently documents this as an architectural contract rather than a formal abstract interface in code.
+`CliRenderer` is the first built-in implementation of this interface and is used as `CliRenderer().render(run_output)`.
 
-`CliRenderer` is the first built-in implementation of that renderer contract.
+## Export Strategy
 
-## Future Direction
+The custom portable representation produced by `OutputSerializer.toPortable(...)` is the default intermediate format target.
 
-The architecture is intended to grow toward two explicit interfaces:
-
-- a formal renderer interface
-- a formal output object interface
-
-Today, the normalized result object already acts like the output-side contract, and renderers already behave as if they implement a shared rendering contract.
-
-Future work is expected to formalize both sides so execution and presentation can connect through named interfaces instead of an implied object shape.
+Standardized output formats can be added later as exporters if they can accurately represent the library's suite, method, describe, hook, assertion, and error semantics.
 
 ## Recommended Extension Practices
 
 - Keep renderers pure consumers of result data.
 - Avoid adding execution logic to renderer implementations.
 - Keep matcher behavior in `Matchers`, not in suite or renderer code.
-- Follow implemented MVP behavior closely when expanding examples or docs.
-
-## Current MVP Limitations
-
-- No GUI renderer yet.
-- Renderer contract is documented, not formalized in code.
-- Output object contract is implied by normalized results, not formalized in code.
-- The library is still early-stage and should be documented against actual shipped behavior, not aspirational behavior.
+- Keep serializers separate from renderers unless the renderer is explicitly an exporter.

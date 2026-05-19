@@ -8,11 +8,11 @@ class DescribeScope
         this.hasFailFastOverride := false
         this.failFastOverride := false
         this.id := description
-        this.result := Results.newDescribeResult(description, false)
+        this.result := Results.newDescribeOutput(description, false)
 
         if (IsObject(execution_context) && execution_context.currentMethodResult != "") {
             this.id := execution_context.currentMethod "::" description
-            execution_context.currentMethodResult.describes.Push(this.result)
+            execution_context.currentMethodResult.addDescribe(this.result)
         }
     }
 
