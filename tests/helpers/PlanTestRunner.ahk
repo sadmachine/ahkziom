@@ -14,8 +14,15 @@ test_files := [
     A_ScriptDir "\\..\\functional\\MvpFlowTests.ahk"
 ]
 
+failed := false
+
 for test_file in test_files {
     if (FileExist(test_file)) {
-        RunWait('"' A_AhkPath '" /ErrorStdOut "' test_file '"')
+        exit_code := RunWait('"' A_AhkPath '" /ErrorStdOut "' test_file '"')
+        if (exit_code != 0) {
+            failed := true
+        }
     }
 }
+
+ExitApp failed ? 1 : 0
