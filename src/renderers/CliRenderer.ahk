@@ -13,8 +13,20 @@ class CliRenderer extends IRenderer
         for suite_output in test_run_output.suites {
             lines.Push("Suite: " suite_output.name)
 
+            for hook_output in suite_output.hooks {
+                if (!hook_output.passed) {
+                    hook_label := hook_output.method = "" ? hook_output.name : hook_output.name " for " hook_output.method
+                    lines.Push("  Hook failed: " hook_label)
+                    lines.Push("    " hook_output.error)
+                }
+            }
+
             for method_output in suite_output.methods {
                 lines.Push("  Method: " method_output.name)
+
+                if (method_output.error != "") {
+                    lines.Push("    Error: " method_output.error)
+                }
 
                 for describe_output in method_output.describes {
                     lines.Push("    Describe: " describe_output.description)
@@ -25,6 +37,10 @@ class CliRenderer extends IRenderer
 
                         if (assertion_output.message != "") {
                             lines.Push("        " assertion_output.message)
+                        }
+
+                        if (assertion_output.error != "") {
+                            lines.Push("        Error: " assertion_output.error)
                         }
                     }
                 }

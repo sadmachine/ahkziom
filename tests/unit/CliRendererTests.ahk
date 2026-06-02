@@ -35,4 +35,13 @@ if (RTrim(written_output, "`n`r") != output) {
 
 FileDelete(stream_file)
 
+suite_output.addHook(HookOutput("beforeEach", "sampleTest", false, "hook boom"))
+method_output.error := "method boom"
+describe_output.addAssertion(AssertionOutput("usage error", "toHaveLength", 42, 1, false, "Expected value to expose Length", false, "NoLength"))
+
+output := CliRenderer().render(run_output)
+if (!InStr(output, "hook boom") || !InStr(output, "method boom") || !InStr(output, "NoLength")) {
+    throw Error("Expected CLI output to include hook, method, and assertion errors")
+}
+
 ExitApp

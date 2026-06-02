@@ -14,15 +14,25 @@ test_files := [
     A_ScriptDir "\\..\\functional\\MvpFlowTests.ahk"
 ]
 
-failed := false
+failed_files := []
 
 for test_file in test_files {
     if (FileExist(test_file)) {
+        FileAppend("Running " test_file "`n", "*")
         exit_code := RunWait('"' A_AhkPath '" /ErrorStdOut "' test_file '"')
         if (exit_code != 0) {
-            failed := true
+            failed_files.Push(test_file)
         }
     }
 }
 
-ExitApp failed ? 1 : 0
+if (failed_files.Length > 0) {
+    FileAppend("Failed test files:`n", "*")
+    for failed_file in failed_files {
+        FileAppend("- " failed_file "`n", "*")
+    }
+    ExitApp 1
+}
+
+FileAppend("All test files passed.`n", "*")
+ExitApp 0
