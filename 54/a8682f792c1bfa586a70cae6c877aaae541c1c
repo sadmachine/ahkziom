@@ -1,0 +1,19 @@
+tests/helpers/PlanTestRunner.ahk
+  s_8f1b140355a27c::t_7505d8e2790ad8 17-18,21-24,27-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "54a8682f792c1bfa586a70cae6c877aaae541c1c",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
