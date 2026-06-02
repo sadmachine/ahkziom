@@ -1,9 +1,16 @@
 {
-  "name": "sadmachine/ahkxiom",
+  "name": "sadmachine/ahkziom",
+  "version": "0.1.0",
   "installBase": "Lib",
-  "defaultRequirementSource": "git",
   "dependencies": {},
   "devDependencies": {},
   "scripts": {},
-  "sources": []
+  "sources": {
+    "gh": {
+      "type": "github",
+      "host": "github.com",
+      "protocol": "ssh"
+    }
+  },
+  "autoload": {}
 }
