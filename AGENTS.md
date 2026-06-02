@@ -43,6 +43,13 @@ This repository is a library. Favor reusable APIs, clear module boundaries, and 
 - Follow the documented style rules when adding or editing code.
 - Avoid introducing patterns that make the library harder to understand, use, or maintain.
 
+## Test Execution
+
+- Prefer the caught test harness for individual AHK test files to avoid GUI error dialogs during automated/debug runs:
+  - `AutoHotkey64.exe /ErrorStdOut tests\helpers\CaughtTestRunner.ahk tests\unit\SomeTest.ahk`
+- Use `tests\helpers\PlanTestRunner.ahk` for full-suite verification.
+- If a direct AHK test run produces GUI errors, rerun through `CaughtTestRunner.ahk` before asking the user to copy error text.
+
 ## Commits
 
 - Make commits as atomic as practical.

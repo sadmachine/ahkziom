@@ -82,6 +82,27 @@ output := CliRenderer().render(run_output)
 MsgBox output
 ```
 
+## Run A Suite File From The CLI
+
+Suite files can be directly executable scripts. The suite file chooses its renderer, so CLI output today and future GUI renderers can use the same result objects.
+
+```ahk
+#Requires AutoHotkey v2.0
+#Include src/Ahkxiom.ahk
+
+class MathSuite extends TestSuiteBase
+{
+    sampleTest() {
+        d := this.describe("Math checks")
+        d.it("adds numbers").expect(2 + 2).toBe(4)
+    }
+}
+
+run_output := SuiteRunner.runSuiteInstances([MathSuite()])
+CliRenderer("*").render(run_output)
+ExitApp run_output.counts.failed + run_output.counts.errored > 0 ? 1 : 0
+```
+
 ## Recommended Practices
 
 - Keep each suite focused on one concern.

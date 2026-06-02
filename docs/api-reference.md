@@ -211,6 +211,14 @@ Caveat:
 
 ## `CliRenderer`
 
+### `CliRenderer(output_stream := "")`
+
+Creates a CLI renderer.
+
+Parameters:
+
+- `output_stream`: optional `FileAppend(...)` target. Use `"*"` for stdout. When omitted, rendering returns text without writing it.
+
 ### `CliRenderer().render(test_run_output)`
 
 Consumes a `TestRunOutput` object and returns CLI-friendly text output.
@@ -222,6 +230,11 @@ Parameters:
 Returns:
 
 - string output for terminal or message-box style presentation
+
+Behavior:
+
+- when `output_stream` is empty, returns the rendered string only
+- when `output_stream` is set, writes the rendered string plus a trailing newline and still returns the string
 
 ### `CliRenderer.joinLines(lines)`
 

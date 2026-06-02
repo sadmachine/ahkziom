@@ -2,6 +2,10 @@
 
 class CliRenderer extends IRenderer
 {
+    __New(output_stream := "") {
+        this.outputStream := output_stream
+    }
+
     render(test_run_output) {
         lines := []
         lines.Push("Run: " test_run_output.runId " (schema " test_run_output.schemaVersion ")")
@@ -28,7 +32,12 @@ class CliRenderer extends IRenderer
         }
 
         lines.Push("Summary: " test_run_output.counts.passed " passed, " test_run_output.counts.failed " failed, " test_run_output.counts.errored " errored")
-        return CliRenderer.joinLines(lines)
+        output := CliRenderer.joinLines(lines)
+        if (this.outputStream != "") {
+            FileAppend(output "`n", this.outputStream)
+        }
+
+        return output
     }
 
     static joinLines(lines) {

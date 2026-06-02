@@ -17,4 +17,22 @@ if (!InStr(output, "ExampleSuite") || !InStr(output, "adds numbers") || !InStr(o
     throw Error("Expected CLI output to render canonical output objects")
 }
 
+stream_file := A_Temp "\\ahkxiom-cli-renderer-test.txt"
+if (FileExist(stream_file)) {
+    FileDelete(stream_file)
+}
+
+stream_output := CliRenderer(stream_file).render(run_output)
+written_output := FileRead(stream_file)
+
+if (stream_output != output) {
+    throw Error("Expected stream renderer to return rendered output")
+}
+
+if (RTrim(written_output, "`n`r") != output) {
+    throw Error("Expected stream renderer to write rendered output")
+}
+
+FileDelete(stream_file)
+
 ExitApp
