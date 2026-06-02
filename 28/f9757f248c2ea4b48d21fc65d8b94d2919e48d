@@ -1,0 +1,25 @@
+tests/helpers/PlanTestRunner.ahk
+  s_8f1b140355a27c::t_590c63cfdc59ec 17,21,24,29-38
+docs/contributor-guide.md
+  s_8f1b140355a27c::t_06ca227aae6c21 94-105
+src/renderers/CliRenderer.ahk
+  s_8f1b140355a27c::t_f5aa11043c0191 16-23,27-30,41-43
+tests/unit/CliRendererTests.ahk
+  s_8f1b140355a27c::t_cdaab106dd15d5 38-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "28f9757f248c2ea4b48d21fc65d8b94d2919e48d",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
