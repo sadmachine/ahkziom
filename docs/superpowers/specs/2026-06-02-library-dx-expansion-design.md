@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Improve ahkxiom's user-facing developer experience without changing the current test authoring model. The work adds expected matcher APIs, a reusable multi-suite runner path, a thin script entrypoint, clearer CLI output, better contributor test-runner feedback, and documentation for new and previously under-documented behavior.
+Improve ahkxiom's user-facing developer experience without changing the current test authoring model. The work adds expected matcher APIs, a reusable multi-suite runner path, executable suite-file guidance, stream-aware CLI output, better contributor test-runner feedback, and documentation for new and previously under-documented behavior.
 
 ## Matcher Expansion
 
@@ -27,30 +27,31 @@ run_output := SuiteRunner.runSuiteInstances([FirstSuite(), SecondSuite()])
 
 The method should return one `TestRunOutput` containing one `SuiteOutput` per suite instance. Existing `SuiteRunner.runSuiteInstance(...)` behavior remains available for single-suite usage. Multi-suite execution should preserve exhaustive behavior: all suite instances should be attempted, and a failing or throwing method in one suite must not prevent later methods or later suites from running.
 
-## Script Entrypoint
+## Executable Suite Files
 
-Add a thin script entrypoint, expected at `bin/ahkxiom.ahk`, for terminal use:
+Suite files should be documented as directly executable AutoHotkey scripts. This keeps renderer choice inside the suite file and avoids a fragile dynamic include entrypoint.
 
-```powershell
-AutoHotkey64.exe bin\ahkxiom.ahk path\to\suite-file.ahk
-```
-
-The suite file remains responsible for choosing how to run and render results by exposing a known callable:
+Suite files can run their own suites and choose any renderer:
 
 ```ahk
-AhkxiomMain() {
-    run_output := SuiteRunner.runSuiteInstances([MySuite()])
-    return CliRenderer().render(run_output)
-}
+run_output := SuiteRunner.runSuiteInstances([MySuite()])
+CliRenderer("*").render(run_output)
+ExitApp run_output.counts.failed + run_output.counts.errored > 0 ? 1 : 0
 ```
 
-The entrypoint loads the provided suite file, verifies `AhkxiomMain` exists, calls it, and writes returned text to stdout when the returned value is not empty. This preserves renderer ownership in the suite file: a future GUI renderer may display its own UI and return an empty string without the entrypoint forcing CLI rendering.
-
-Entrypoint usage errors should write a concise message to stdout/stderr and exit non-zero. Successful execution should exit zero unless the suite-owned `AhkxiomMain()` throws.
+Future CLI launcher work can still be added later if flags such as filtering, listing, watching, or standardized discovery become valuable.
 
 ## CLI Renderer Improvements
 
-Improve `CliRenderer` output while preserving the current general structure. It should show:
+Improve `CliRenderer` output while preserving the current general structure. Add a constructor accepting an optional output stream target:
+
+```ahk
+renderer := CliRenderer(output_stream := "")
+```
+
+When `output_stream` is empty, `render(test_run_output)` returns the output string without writing it, preserving current behavior. When `output_stream` is set, `render(...)` writes the rendered text plus a trailing newline to that stream using `FileAppend(...)` and still returns the output string. `"*"` should write to stdout.
+
+The rendered text should show:
 
 - failed hook names, associated method names when present, and hook error text;
 - method-level errors recorded on `MethodOutput.error`;
@@ -75,9 +76,9 @@ Update documentation for all new behavior and any existing behavior touched or n
 
 Required documentation updates:
 
-- README: add quick mention of the script entrypoint and a future-work section listing JSON exporter support.
-- Getting Started: document running suites through the entrypoint and keeping renderer choice inside `AhkxiomMain()`.
-- API Reference: document new matchers, `SuiteRunner.runSuiteInstances(...)`, and `AhkxiomMain()` entrypoint expectations.
+- README: add quick mention of executable suite files and a future-work section listing JSON exporter and CLI launcher support.
+- Getting Started: document executable suite files and keeping renderer choice in the suite file.
+- API Reference: document new matchers, `SuiteRunner.runSuiteInstances(...)`, and `CliRenderer(output_stream := "")`.
 - Contributor Guide: document improved test-helper behavior and existing renderer responsibilities if not already clear.
 - Result Format: document existing hook errors, method errors, assertion errors, and counts if missing or incomplete.
 
@@ -87,7 +88,7 @@ Add or update tests to cover:
 
 - all new matcher pass/fail behavior and usage-error recording;
 - multi-suite `SuiteRunner.runSuiteInstances(...)` output shape and exhaustive behavior;
-- script entrypoint success and missing-argument/missing-`AhkxiomMain` errors where practical;
+- executable suite-file examples and stream-writing renderer behavior;
 - CLI rendering for hook failures, method errors, and assertion error text;
 - helper runner progress/failure summary behavior where practical;
 - documentation examples remaining syntactically aligned with AutoHotkey v2 style.
