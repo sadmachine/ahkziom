@@ -1,0 +1,32 @@
+AGENTS.md
+  s_8f1b140355a27c::t_57bf845ba70ead 46-52
+src/renderers/CliRenderer.ahk
+  s_8f1b140355a27c::t_661c5270b3949e 5-8,35-40
+docs/api-reference.md
+  s_8f1b140355a27c::t_cc53be78c28a13 214-221,234-238
+docs/getting-started.md
+  s_8f1b140355a27c::t_cc53be78c28a13 85-103
+tests/helpers/CaughtTestRunner.ahk
+  s_8f1b140355a27c::t_57bf845ba70ead 1-14,16-19,23-29,34-36,38
+  s_8f1b140355a27c::t_4bbdf7bcadf77f 15,30-33
+  s_8f1b140355a27c::t_c66331de18c7fe 37
+  s_8f1b140355a27c::t_48890960cf6ffe 20-22
+tests/unit/CliRendererTests.ahk
+  s_8f1b140355a27c::t_a5aaded83d8ef3 20-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "806eea6147bce1b772c7c295c56f427a32bd61fd",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
