@@ -1,0 +1,21 @@
+docs/result-format.md
+  s_8f1b140355a27c::t_b89cbf334f14e2 78-81
+README.md
+  s_8f1b140355a27c::t_b89cbf334f14e2 22-31,38-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "37e7319c4a1d770c9a1dab585b0d96f1e6676a62",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
