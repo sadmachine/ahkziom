@@ -26,6 +26,18 @@ class Matchers
         return expectation_obj.recordResult("toBeFalsy", passed, "", message)
     }
 
+    static toBeTrue(expectation_obj) {
+        passed := expectation_obj.actual = true
+        message := passed ? "" : "Expected value to be true"
+        return expectation_obj.recordResult("toBeTrue", passed, true, message)
+    }
+
+    static toBeFalse(expectation_obj) {
+        passed := expectation_obj.actual = false
+        message := passed ? "" : "Expected value to be false"
+        return expectation_obj.recordResult("toBeFalse", passed, false, message)
+    }
+
     static toBeDefined(expectation_obj) {
         value_factory := expectation_obj.valueFactory
         if (!HasMethod(value_factory, "Call")) {
@@ -44,6 +56,20 @@ class Matchers
         return expectation_obj.recordResult("toBeDefined", passed, "", message)
     }
 
+    static toBeUndefined(expectation_obj) {
+        value_factory := expectation_obj.valueFactory
+        if (!HasMethod(value_factory, "Call")) {
+            return expectation_obj.recordResult("toBeUndefined", false, "", "Expected a callable variable accessor", "NotVariableAccessor")
+        }
+
+        try {
+            value_factory.Call()
+            return expectation_obj.recordResult("toBeUndefined", false, "", "Expected variable to be undefined")
+        } catch UnsetError as _ {
+            return expectation_obj.recordResult("toBeUndefined", true)
+        }
+    }
+
     static toBeEmpty(expectation_obj) {
         passed := expectation_obj.actual = ""
         message := passed ? "" : "Expected value to be empty"
@@ -60,6 +86,30 @@ class Matchers
         passed := expectation_obj.actual > expected
         message := passed ? "" : "Expected value to be greater than " Matchers.valueText(expected)
         return expectation_obj.recordResult("toBeGreaterThan", passed, expected, message)
+    }
+
+    static toHaveLength(expectation_obj, expected) {
+        actual := expectation_obj.actual
+        if (!IsObject(actual) || !actual.HasProp("Length")) {
+            return expectation_obj.recordResult("toHaveLength", false, expected, "Expected value to expose Length", "NoLength")
+        }
+
+        passed := actual.Length = expected
+        message := passed ? "" : "Expected length to be " Matchers.valueText(expected)
+        return expectation_obj.recordResult("toHaveLength", passed, expected, message)
+    }
+
+    static toStartWith(expectation_obj, expected) {
+        passed := SubStr(expectation_obj.actual, 1, StrLen(expected)) = expected
+        message := passed ? "" : "Expected value to start with " Matchers.valueText(expected)
+        return expectation_obj.recordResult("toStartWith", passed, expected, message)
+    }
+
+    static toEndWith(expectation_obj, expected) {
+        start_position := StrLen(expectation_obj.actual) - StrLen(expected) + 1
+        passed := start_position > 0 && SubStr(expectation_obj.actual, start_position) = expected
+        message := passed ? "" : "Expected value to end with " Matchers.valueText(expected)
+        return expectation_obj.recordResult("toEndWith", passed, expected, message)
     }
 
     static toContain(expectation_obj, expected) {

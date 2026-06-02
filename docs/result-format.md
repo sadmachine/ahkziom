@@ -1,6 +1,6 @@
 # Result Format
 
-`SuiteRunner.runSuiteInstance(...)` returns a `TestRunOutput` object.
+`SuiteRunner.runSuiteInstance(...)` and `SuiteRunner.runSuiteInstances(...)` return a `TestRunOutput` object.
 
 `TestRunOutput` is the canonical in-memory output interface. Use `OutputSerializer.toPortable(...)` to convert it into a plain-data representation suitable for JSON-style serialization or deferred rendering.
 
@@ -73,6 +73,12 @@ Renderers consume `TestRunOutput`. The built-in CLI renderer is used as an insta
 
 ```ahk
 output := CliRenderer().render(run_output)
+```
+
+Use an output stream target to write directly while still receiving the rendered string:
+
+```ahk
+output := CliRenderer("*").render(run_output)
 ```
 
 Renderers should treat the output object as read-only presentation data and should not execute tests.

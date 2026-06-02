@@ -67,8 +67,20 @@ class Expectation
         return Matchers.toBeFalsy(this)
     }
 
+    toBeTrue() {
+        return Matchers.toBeTrue(this)
+    }
+
+    toBeFalse() {
+        return Matchers.toBeFalse(this)
+    }
+
     toBeDefined() {
         return Matchers.toBeDefined(this)
+    }
+
+    toBeUndefined() {
+        return Matchers.toBeUndefined(this)
     }
 
     toBeEmpty() {
@@ -81,6 +93,18 @@ class Expectation
 
     toBeGreaterThan(expected) {
         return Matchers.toBeGreaterThan(this, expected)
+    }
+
+    toHaveLength(expected) {
+        return Matchers.toHaveLength(this, expected)
+    }
+
+    toStartWith(expected) {
+        return Matchers.toStartWith(this, expected)
+    }
+
+    toEndWith(expected) {
+        return Matchers.toEndWith(this, expected)
     }
 
     toContain(expected) {

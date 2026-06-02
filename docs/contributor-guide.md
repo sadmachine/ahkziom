@@ -91,6 +91,20 @@ Renderer non-responsibilities:
 
 `CliRenderer` is the first built-in implementation of this interface and is used as `CliRenderer().render(run_output)`.
 
+`CliRenderer` should surface hook failures, method-level errors, assertion failure messages, and assertion error fields. It may write to an output stream when constructed with one, but it should still return the rendered string.
+
+## Test Helper
+
+Use `tests/helpers/PlanTestRunner.ahk` to run the full project test set.
+
+The helper prints each test file before running it, attempts every configured test file even after failures, prints a failed-file summary when needed, and exits non-zero if any child test file fails.
+
+For individual test files during debugging, use `tests/helpers/CaughtTestRunner.ahk` to capture uncaught AHK errors as terminal output instead of GUI dialogs:
+
+```powershell
+AutoHotkey64.exe /ErrorStdOut tests\helpers\CaughtTestRunner.ahk tests\unit\MatcherTests.ahk
+```
+
 ## Export Strategy
 
 The custom portable representation produced by `OutputSerializer.toPortable(...)` is the default intermediate format target.

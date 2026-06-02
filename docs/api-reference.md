@@ -57,6 +57,24 @@ Returns:
 
 - `TestRunOutput`
 
+### `SuiteRunner.runSuiteInstances(suite_instances)`
+
+Executes multiple instantiated suites and returns one `TestRunOutput` object containing one `SuiteOutput` per suite.
+
+Parameters:
+
+- `suite_instances`: array of instantiated suites extending `TestSuiteBase`
+
+Returns:
+
+- `TestRunOutput`
+
+Execution behavior:
+
+- attempts every suite instance in the array
+- preserves each suite's normal method discovery and lifecycle behavior
+- aggregates counts across all suites
+
 ## `DescribeScope`
 
 ### `DescribeScope.failFast(enabled := true)`
@@ -127,9 +145,25 @@ Checks whether the value is truthy.
 
 Checks whether the value is falsy.
 
+### `toBeTrue()`
+
+Checks strict boolean `true`.
+
+### `toBeFalse()`
+
+Checks strict boolean `false`.
+
 ### `toBeDefined()`
 
 Checks whether a variable accessor passed through `expectVar(...)` resolves without an `UnsetError`.
+
+### `toBeUndefined()`
+
+Checks whether a variable accessor passed through `expectVar(...)` raises an `UnsetError`.
+
+Caveat:
+
+- Use `expectVar(...)` for undefined checks. Calling `toBeUndefined()` from `expect(...)` records a matcher usage error.
 
 ### `toBeEmpty()`
 
@@ -142,6 +176,18 @@ Checks `<`.
 ### `toBeGreaterThan(expected)`
 
 Checks `>`.
+
+### `toHaveLength(expected)`
+
+Checks whether the value exposes `.Length` and whether that length equals `expected`.
+
+### `toStartWith(expected)`
+
+Checks string prefix semantics.
+
+### `toEndWith(expected)`
+
+Checks string suffix semantics.
 
 ### `toContain(expected)`
 
@@ -165,6 +211,14 @@ Caveat:
 
 ## `CliRenderer`
 
+### `CliRenderer(output_stream := "")`
+
+Creates a CLI renderer.
+
+Parameters:
+
+- `output_stream`: optional `FileAppend(...)` target. Use `"*"` for stdout. When omitted, rendering returns text without writing it.
+
 ### `CliRenderer().render(test_run_output)`
 
 Consumes a `TestRunOutput` object and returns CLI-friendly text output.
@@ -176,6 +230,11 @@ Parameters:
 Returns:
 
 - string output for terminal or message-box style presentation
+
+Behavior:
+
+- when `output_stream` is empty, returns the rendered string only
+- when `output_stream` is set, writes the rendered string plus a trailing newline and still returns the string
 
 ### `CliRenderer.joinLines(lines)`
 

@@ -17,4 +17,31 @@ if (!InStr(output, "ExampleSuite") || !InStr(output, "adds numbers") || !InStr(o
     throw Error("Expected CLI output to render canonical output objects")
 }
 
+stream_file := A_Temp "\\ahkxiom-cli-renderer-test.txt"
+if (FileExist(stream_file)) {
+    FileDelete(stream_file)
+}
+
+stream_output := CliRenderer(stream_file).render(run_output)
+written_output := FileRead(stream_file)
+
+if (stream_output != output) {
+    throw Error("Expected stream renderer to return rendered output")
+}
+
+if (RTrim(written_output, "`n`r") != output) {
+    throw Error("Expected stream renderer to write rendered output")
+}
+
+FileDelete(stream_file)
+
+suite_output.addHook(HookOutput("beforeEach", "sampleTest", false, "hook boom"))
+method_output.error := "method boom"
+describe_output.addAssertion(AssertionOutput("usage error", "toHaveLength", 42, 1, false, "Expected value to expose Length", false, "NoLength"))
+
+output := CliRenderer().render(run_output)
+if (!InStr(output, "hook boom") || !InStr(output, "method boom") || !InStr(output, "NoLength")) {
+    throw Error("Expected CLI output to include hook, method, and assertion errors")
+}
+
 ExitApp
