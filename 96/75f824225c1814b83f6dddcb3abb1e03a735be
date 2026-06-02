@@ -1,0 +1,22 @@
+tests/unit/SuiteRunnerTests.ahk
+  s_8f1b140355a27c::t_6ec35645f88f9c 79-106,114,118,122-126
+  s_8f1b140355a27c::t_0a45453c6dc4c5 109-113,117,121,140-181
+src/core/SuiteRunner.ahk
+  s_8f1b140355a27c::t_b86c6e57e073ab 43-45,47-48,50-58,60-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "9675f824225c1814b83f6dddcb3abb1e03a735be",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
