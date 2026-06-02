@@ -32,6 +32,20 @@ class SuiteRunner
         return methods
     }
 
+    static runSuiteInstances(suite_instances) {
+        test_run_output := Results.newTestRunOutput("MultipleSuites")
+
+        for suite_instance in suite_instances {
+            suite_run_output := SuiteRunner.runSuiteInstance(suite_instance)
+            for suite_output in suite_run_output.suites {
+                test_run_output.addSuite(suite_output)
+            }
+        }
+
+        Results.finalizeCounts(test_run_output)
+        return test_run_output
+    }
+
     static runSuiteInstance(suite_instance) {
         test_run_output := Results.newTestRunOutput(suite_instance.base.__Class)
         suite_output := Results.newSuiteOutput(suite_instance.base.__Class)

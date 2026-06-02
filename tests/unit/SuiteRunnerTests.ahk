@@ -126,6 +126,30 @@ if (throwing_suite.__currentExecutionContext != "") {
     throw Error("Expected execution context to be cleared after suite run")
 }
 
+class FirstMultiSuite extends TestSuiteBase
+{
+    firstTest() {
+        this.describe("First").it("passes").expect(1).toBe(1)
+    }
+}
+
+class SecondMultiSuite extends TestSuiteBase
+{
+    secondTest() {
+        this.describe("Second").it("fails").expect(1).toBe(2)
+    }
+}
+
+multi_run := SuiteRunner.runSuiteInstances([FirstMultiSuite(), SecondMultiSuite()])
+
+if (multi_run.suites.Length != 2) {
+    throw Error("Expected multi-suite run to include two suites")
+}
+
+if (multi_run.counts.passed != 1 || multi_run.counts.failed != 1) {
+    throw Error("Expected multi-suite counts to aggregate across suites")
+}
+
 ExitApp
 
 joinArray(values, separator) {

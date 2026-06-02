@@ -1,6 +1,6 @@
 # Result Format
 
-`SuiteRunner.runSuiteInstance(...)` returns a `TestRunOutput` object.
+`SuiteRunner.runSuiteInstance(...)` and `SuiteRunner.runSuiteInstances(...)` return a `TestRunOutput` object.
 
 `TestRunOutput` is the canonical in-memory output interface. Use `OutputSerializer.toPortable(...)` to convert it into a plain-data representation suitable for JSON-style serialization or deferred rendering.
 

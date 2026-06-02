@@ -57,6 +57,24 @@ Returns:
 
 - `TestRunOutput`
 
+### `SuiteRunner.runSuiteInstances(suite_instances)`
+
+Executes multiple instantiated suites and returns one `TestRunOutput` object containing one `SuiteOutput` per suite.
+
+Parameters:
+
+- `suite_instances`: array of instantiated suites extending `TestSuiteBase`
+
+Returns:
+
+- `TestRunOutput`
+
+Execution behavior:
+
+- attempts every suite instance in the array
+- preserves each suite's normal method discovery and lifecycle behavior
+- aggregates counts across all suites
+
 ## `DescribeScope`
 
 ### `DescribeScope.failFast(enabled := true)`
