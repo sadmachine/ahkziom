@@ -1,0 +1,28 @@
+tests/unit/MatcherTests.ahk
+  s_8f1b140355a27c::t_cd320798c2846f 11-15,24-25,34-50
+  s_8f1b140355a27c::t_836b6a3ec94f6c 21,54,57
+  s_8f1b140355a27c::t_78a976c0b64e92 55-56
+docs/api-reference.md
+  s_8f1b140355a27c::t_a31a7431dc9356 130-137,142-149,162-172
+src/assertions/Matchers.ahk
+  s_8f1b140355a27c::t_70abc94de4ab94 29-40,59-72,91-108,111-114
+  s_8f1b140355a27c::t_78a4f037663924 109-110
+src/assertions/Expectation.ahk
+  s_8f1b140355a27c::t_70abc94de4ab94 70-77,82-85,98-109
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "aaf1c8491897a815e416f0961fa745dcf6d4a12f",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
