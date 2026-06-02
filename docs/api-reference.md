@@ -127,9 +127,25 @@ Checks whether the value is truthy.
 
 Checks whether the value is falsy.
 
+### `toBeTrue()`
+
+Checks strict boolean `true`.
+
+### `toBeFalse()`
+
+Checks strict boolean `false`.
+
 ### `toBeDefined()`
 
 Checks whether a variable accessor passed through `expectVar(...)` resolves without an `UnsetError`.
+
+### `toBeUndefined()`
+
+Checks whether a variable accessor passed through `expectVar(...)` raises an `UnsetError`.
+
+Caveat:
+
+- Use `expectVar(...)` for undefined checks. Calling `toBeUndefined()` from `expect(...)` records a matcher usage error.
 
 ### `toBeEmpty()`
 
@@ -142,6 +158,18 @@ Checks `<`.
 ### `toBeGreaterThan(expected)`
 
 Checks `>`.
+
+### `toHaveLength(expected)`
+
+Checks whether the value exposes `.Length` and whether that length equals `expected`.
+
+### `toStartWith(expected)`
+
+Checks string prefix semantics.
+
+### `toEndWith(expected)`
+
+Checks string suffix semantics.
 
 ### `toContain(expected)`
 
