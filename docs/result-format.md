@@ -75,4 +75,10 @@ Renderers consume `TestRunOutput`. The built-in CLI renderer is used as an insta
 output := CliRenderer().render(run_output)
 ```
 
+Use an output stream target to write directly while still receiving the rendered string:
+
+```ahk
+output := CliRenderer("*").render(run_output)
+```
+
 Renderers should treat the output object as read-only presentation data and should not execute tests.
