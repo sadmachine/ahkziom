@@ -40,24 +40,29 @@ class SuiteRunner
 
         SuiteRunner.runHook(suite_instance, suite_output, "beforeAll")
 
-        for method_name in SuiteRunner.discoverTestMethods(suite_instance) {
-            SuiteRunner.runHook(suite_instance, suite_output, "beforeEach", method_name)
+        try {
+            for method_name in SuiteRunner.discoverTestMethods(suite_instance) {
+                SuiteRunner.runHook(suite_instance, suite_output, "beforeEach", method_name)
 
-            method_result := context.beginMethod(method_name)
-            suite_instance.__currentExecutionContext := context
+                method_result := context.beginMethod(method_name)
+                suite_instance.__currentExecutionContext := context
 
-            try {
-                suite_instance.%method_name%()
-            } catch as err {
-                method_result.error := err.Message
+                try {
+                    suite_instance.%method_name%()
+                } catch as err {
+                    method_result.error := err.Message
+                } finally {
+                    suite_output.addMethod(method_result)
+                    suite_instance.__currentExecutionContext := ""
+                    SuiteRunner.runHook(suite_instance, suite_output, "afterEach", method_name)
+                }
             }
-
-            suite_output.addMethod(method_result)
-            SuiteRunner.runHook(suite_instance, suite_output, "afterEach", method_name)
+        } finally {
+            suite_instance.__currentExecutionContext := ""
+            SuiteRunner.runHook(suite_instance, suite_output, "afterAll")
+            Results.finalizeCounts(test_run_output)
         }
 
-        SuiteRunner.runHook(suite_instance, suite_output, "afterAll")
-        Results.finalizeCounts(test_run_output)
         return test_run_output
     }
 

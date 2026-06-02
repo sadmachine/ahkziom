@@ -76,6 +76,56 @@ if (run_result.counts.failed != 2) {
     throw Error("Expected failed assertion count to be aggregated")
 }
 
+class ThrowingSuite extends TestSuiteBase
+{
+    __New() {
+        super.__New()
+        this.log := []
+    }
+
+    throwingTest() {
+        this.log.Push("throwingTest")
+        throw Error("method boom")
+    }
+
+    laterTest() {
+        this.log.Push("laterTest")
+        d := this.describe("Later")
+        d.it("still runs").expect(1).toBe(1)
+    }
+
+    afterEach() {
+        this.log.Push("afterEach")
+    }
+}
+
+throwing_suite := ThrowingSuite()
+throwing_run := SuiteRunner.runSuiteInstance(throwing_suite)
+
+if (throwing_run.suites[1].methods.Length != 2) {
+    throw Error("Expected both throwing and later test methods to be recorded")
+}
+
+if (!arrayHas(throwing_suite.log, "throwingTest") || !arrayHas(throwing_suite.log, "laterTest")) {
+    throw Error("Expected throwing and later test methods to execute")
+}
+
+if (countArrayValue(throwing_suite.log, "afterEach") != 2) {
+    throw Error("Expected throwing method cleanup and later method execution")
+}
+
+if (!methodErrorWasRecorded(throwing_run.suites[1].methods, "throwingTest", "method boom")) {
+    throw Error("Expected throwing method error to be recorded")
+}
+
+if (!methodAssertionPassed(throwing_run.suites[1].methods, "laterTest")) {
+    throw Error("Expected later method assertion to pass")
+}
+
+if (throwing_suite.__currentExecutionContext != "") {
+    throw Error("Expected execution context to be cleared after suite run")
+}
+
 ExitApp
 
 joinArray(values, separator) {
@@ -86,4 +136,46 @@ joinArray(values, separator) {
     }
 
     return joined
+}
+
+arrayHas(values, expected) {
+    for value in values {
+        if (value = expected) {
+            return true
+        }
+    }
+
+    return false
+}
+
+countArrayValue(values, expected) {
+    count := 0
+
+    for value in values {
+        if (value = expected) {
+            count += 1
+        }
+    }
+
+    return count
+}
+
+methodErrorWasRecorded(methods, method_name, error_text) {
+    for method_output in methods {
+        if (method_output.name = method_name && method_output.error = error_text) {
+            return true
+        }
+    }
+
+    return false
+}
+
+methodAssertionPassed(methods, method_name) {
+    for method_output in methods {
+        if (method_output.name = method_name) {
+            return method_output.describes[1].assertions[1].passed
+        }
+    }
+
+    return false
 }
