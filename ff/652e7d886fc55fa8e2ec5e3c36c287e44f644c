@@ -1,0 +1,19 @@
+docs/superpowers/specs/2026-06-02-library-dx-expansion-design.md
+  s_8f1b140355a27c::t_cdce1a30374245 1-93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "ff652e7d886fc55fa8e2ec5e3c36c287e44f644c",
+  "prompts": {},
+  "sessions": {
+    "s_8f1b140355a27c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1778ab354ffe80umIOQFAWwnl2",
+        "model": "unknown"
+      },
+      "human_author": "sadmachine <github.sadmachine@gmail.com>"
+    }
+  }
+}
